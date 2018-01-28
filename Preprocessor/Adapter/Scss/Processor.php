@@ -84,6 +84,11 @@ class Processor implements ContentProcessorInterface
 
         try {
             $compiler = new Compiler();
+            //set dirctory for source map
+            $compiler->setSourceMapOptions([
+                'sourceMapBasepath' => $themePath
+            ]);
+
 
             //add import path so @import directives will work (http://leafo.net/scssphp/docs/#import_paths)
             $compiler->addImportPath($themePath . '/web/css');
@@ -94,6 +99,9 @@ class Processor implements ContentProcessorInterface
                 return '';
             }
 
+//            $compiler->setLineNumberStyle(Compiler::LINE_COMMENTS);
+
+            $compiler->setSourceMap(Compiler::SOURCE_MAP_INLINE);
             $compile = $compiler->compile($content);
 
             return $compile;
